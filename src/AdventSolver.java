@@ -15,35 +15,38 @@ public class AdventSolver {
             Scanner s = new Scanner(f);
             while (s.hasNextLine()) {
                 String currentLine = s.nextLine();
-                System.out.println("OG LINE CODE: " + currentLine);
                 line1 += currentLine.substring(currentLine.indexOf(": ") + 2, currentLine.indexOf(" |")) + "\n";
                 line2 += currentLine.substring(currentLine.indexOf("| ") + 2) + "\n";
             }
 
-            System.out.println("Winning:\n" + line1);
-            System.out.println("lotto:\n" + line2);
+            String[] array1 = line1.split("\n");
+            String[] array2 = line2.split("\n");
 
-            // a String array where every item in the array is a line from the file
-            String[] winningArray = line1.split("\n");
-            String[] received = line2.split("\n");
-            System.out.println(Arrays.toString(winningArray));
-            System.out.println(Arrays.toString(received));
-
-            for (String line : fileArray) {
+            for (String line : array1) {
                 // split by space, now we have a list of String numbers
-                String[] stringNumbers = line.split(" ");
+                String[] stringNumbers1 = line.split(" ");
 
                 // create an array of integers
-                int[] numbers = new int[stringNumbers.length];
+                int[] winningLottery = new int[array1.length];
 
                 // convert string numbers into integers
-                for (int i = 0; i < numbers.length; i++) {
-                    numbers[i] = Integer.parseInt(stringNumbers[i]);
-                    System.out.println(numbers);
+                for (int i = 0; i < winningLottery.length; i++) {
+                    winningLottery[i] = Integer.parseInt(stringNumbers1[i]);
                 }
+
+                String[] stringNumbers2 = line.split(" ");
+
+                int[] lotteryNumbers = new int[array2.length];
+
+                // convert string numbers into integers
+                for (int i = 0; i < lotteryNumbers.length; i++) {
+                    lotteryNumbers[i] = Integer.parseInt(stringNumbers2[i]);
+                }
+
+                AdventDay a = new AdventDay(winningLottery, lotteryNumbers);
+                System.out.println(a.pointWorth());
             }
 
-//            AdventDay a = new AdventDay()
         }
         catch (FileNotFoundException fe) {
             System.out.println("File was not found");
